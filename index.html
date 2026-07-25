@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT & AI Summer Camp 2026 — Capstone Showcase</title>
+<style>
+  :root {
+    --ink: #0B1F3A;
+    --paper: #F3F6F9;
+    --panel: #FFFFFF;
+    --line: #D7E0EA;
+    --teal: #0D8A82;
+    --amber: #C6791A;
+    --mono: 'Courier New', ui-monospace, monospace;
+    --sans: 'Segoe UI', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  a { color: var(--teal); }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(243,246,249,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px 16px;
+    z-index: 100;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--ink);
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--panel);
+  }
+  nav a:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+    text-align: left;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.05;
+    margin: 0 0 16px;
+    color: var(--ink);
+  }
+  .hero p.lead {
+    font-size: 18px;
+    max-width: 620px;
+    color: #33475b;
+    line-height: 1.6;
+  }
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .meta-row div { border-left: 3px solid var(--amber); padding-left: 10px; }
+  .meta-row b { display: block; font-size: 16px; }
+
+  /* ---------- MODULE TRACKER (signature element) ---------- */
+  .tracker {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+  }
+  .tracker-line {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  .tracker-node {
+    flex: 1;
+    height: 4px;
+    background: var(--line);
+    position: relative;
+  }
+  .tracker-node:first-child { flex: 0; }
+  .tracker-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 3px solid var(--teal);
+    flex-shrink: 0;
+  }
+
+  /* ---------- SECTIONS ---------- */
+section.module {
+    animation: fadeInUp 0.6s ease both;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    scroll-margin-top: 70px;
+  }
+  .module-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .module-num {
+    font-family: var(--mono);
+    font-size: 14px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .module-head h2 { margin: 0; font-size: 24px; }
+  .module-desc { color: #33475b; margin-bottom: 20px; line-height: 1.6; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 0 var(--line);
+  }
+
+  /* Buttons & inputs */
+  button {
+    font-family: var(--sans);
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  button:hover { background: #0a6b64; }
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: var(--sans);
+    margin-bottom: 12px;
+  }
+  label { font-size: 13px; font-weight: 600; color: #33475b; display: block; margin-bottom: 4px; }
+
+  /* AI fact terminal */
+  .terminal {
+    background: var(--ink);
+    color: #9ee8e2;
+    font-family: var(--mono);
+    padding: 16px;
+    border-radius: 8px;
+    min-height: 60px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    white-space: pre-wrap;
+  }
+
+  /* Budget result */
+  #budget-result {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 8px;
+    display: none;
+    font-family: var(--mono);
+    white-space: pre-wrap;
+  }
+  #budget-result.show { display: block; }
+  .expense-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .expense-row input { margin-bottom: 0; }
+
+  /* Troubleshoot cards */
+  .fix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .fix-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    background: #fafcfe;
+  }
+  .fix-card .q { font-weight: 700; font-size: 14px; }
+  .fix-card .a {
+    display: none;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--teal);
+    border-top: 1px dashed var(--line);
+    padding-top: 8px;
+  }
+  .fix-card.open .a { display: block; }
+  @media (max-width: 640px) { .fix-grid { grid-template-columns: 1fr; } }
+
+  /* Image / video placeholders */
+  .placeholder {
+    border: 2px dashed var(--line);
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #6b7f91;
+    font-size: 14px;
+    background: #fafcfe;
+  }
+
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #6b7f91;
+    border-top: 2px solid var(--ink);
+  }
+   body.dark-mode {
+    background: #0B1F3A;
+    color: #e8eef5;
+   }
+    body.dark-mode .panel,
+    body.dark-mode nav {
+      background: #12294d;
+      border-color: #24406b;
+    }
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode .module-head {
+      color: #e8eef5;
+      border-color: #24406b;
+    }
+    body.dark-mode nav a {
+      background: #12294d;
+      color: #e8eef5;
+      border-color: #24406b;
+    }
+    body.dark-mode input,
+    body.dark-mode select,
+    body.dark-mode textarea {
+      background: #0f2540;
+      color: #e8eef5;
+      border-color: #24406b;
+    }
+    body.dark-mode .lead,
+    body.dark-mode .module-desc {
+      color: #cbd5e1;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0);}
+    }
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: var(--teal);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.1s ease-out;
+    }
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<nav>
+  <a href="#ai">01 AI Tools</a>
+  <a href="#python">02 Python</a>
+  <a href="#design">03 Graphic Design</a>
+  <a href="#troubleshoot">04 Troubleshooting</a>
+  <a href="#video">05 Video Editing</a>
+  <a href="#webdev">06 Web Dev</a>
+  <button id="theme-toggle" onclick="toggleTheme()" style="margin-left:auto; background:var(--ink); color:#fff; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-family:var(--mono); font-size:12px;">🌙 Dark Mode</button>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">CEO Education, District Attock — IT & AI Summer Camp 2026</div>
+  <h1>Capstone Digital<br>Showcase</h1>
+  <p class="lead">A single project demonstrating all six modules of the IT & AI Summer Camp — built by hand, module by module, using only free tools.</p>
+  <div class="meta-row">
+    <div><b>[Sidra Ashfaq]</b>Student</div>
+    <div><b>[Government Girls high School Bahter Tehsil Fateh Jang]</b>Government School, Attock</div>
+    <div><b>16 Days · 64 Hours</b>Programme Duration</div>
+  </div>
+  <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+    <div style="background:var(--teal); color:#fff; padding:8px 16px; border-radius:20px; font-family:var(--mono); font-size:12px;">✅ 6 Modules Covered</div>
+    <div style="background:var(--amber); color:#fff; padding:8px 16px; border-radius:20px; font-family:var(--mono); font-size:12px;">💻 1 Website + 1 Desktop App</div>
+    <div style="background:var(--ink); color:#fff; padding:8px 16px; border-radius:20px; font-family:var(--mono); font-size:12px;">📅 Built in 1 Week</div>
+  </div>
+</div>
+
+<div class="tracker">
+  <div class="tracker-line">
+    <div class="tracker-dot"></div>
+    <div class="tracker-node"></div>
+    <div class="tracker-dot"></div>
+    <div class="tracker-node"></div>
+    <div class="tracker-dot"></div>
+    <div class="tracker-node"></div>
+    <div class="tracker-dot"></div>
+    <div class="tracker-node"></div>
+    <div class="tracker-dot"></div>
+    <div class="tracker-node"></div>
+    <div class="tracker-dot"></div>
+  </div>
+</div>
+
+<!-- MODULE 01: AI TOOLS -->
+<section class="module" id="ai">
+  <div class="module-head">
+    <span class="module-num">01</span>
+    <h2>AI Tools & Applications</h2>
+  </div>
+  <p class="module-desc">What I learned about ChatGPT, Gemini, and prompt engineering — and where I draw the line between using AI as a helper versus letting it do my work for me.</p>
+  <div class="panel">
+    <div class="terminal" id="ai-terminal">&gt; Click "Generate Fact" to pull a random AI concept I learned in Module 01...</div>
+    <button onclick="showAIFact()">Generate Fact</button>
+    <label style="margin-top:18px;">My own reflection — why AI can't replace this project:</label>
+    <textarea rows="4" id="ai-reflection">I used AI tools like ChatGPT only to understand new concepts faster and to get guidance on how to approach this project — the same way we were taught to use AI as an assistant during Module 01 of the camp. Every line of code in this website, every design choice, and every piece of writing here was typed, tested, and understood by me. AI helped me learn, but it did not build this project for me.</textarea>
+  </div>
+</section>
+
+<!-- MODULE 02: PYTHON -->
+<section class="module" id="python">
+  <div class="module-head">
+    <span class="module-num">02</span>
+    <h2>Python Programming</h2>
+  </div>
+  <p class="module-desc">Using the same variables, loops, and if/elif/else logic we learned in Python during camp, I built a Smart Daily Budget Planner — a tool anyone can use to track their pocket money or monthly income against real expenses. Rebuilt here in JavaScript so it runs live in the browser.</p>
+  <div class="panel">
+    <label>Monthly income / pocket money (Rs.)</label>
+    <input type="number" id="budget-income" placeholder="e.g. 5000">
+    <label>How many expense categories do you want to add?</label>
+    <input type="number" id="budget-count" placeholder="e.g. 4" min="1" max="8">
+    <button onclick="setupExpenses()">Set Up Categories</button>
+
+    <div id="expense-inputs" style="margin-top:16px;"></div>
+
+    <button id="calc-budget-btn" style="display:none; margin-top:10px;" onclick="calcBudget()">Calculate My Budget</button>
+    <div id="budget-result"></div>
+  </div>
+</section>
+
+<!-- MODULE 03: GRAPHIC DESIGN -->
+<section class="module" id="design">
+  <div class="module-head">
+    <span class="module-num">03</span>
+    <h2>Graphic Designing</h2>
+  </div>
+  <p class="module-desc">My Canva poster and logo from Module 03 — designed using balance, contrast, alignment and repetition, as taught in camp.</p>
+  <div class="panel">
+      <img src="poster.png.png" style="width:100%; border-radius:8px;">
+  </div>
+</section>
+
+<!-- MODULE 04: SYSTEM TROUBLESHOOTING -->
+<section class="module" id="troubleshoot">
+  <div class="module-head">
+    <span class="module-num">04</span>
+    <h2>System Troubleshooting</h2>
+  </div>
+  <p class="module-desc">Click a problem below to reveal the fix — these are real issues covered in Module 04.</p>
+  <div class="panel">
+    <div class="fix-grid" id="fix-grid"></div>
+  </div>
+</section>
+
+<!-- MODULE 05: VIDEO EDITING -->
+<section class="module" id="video">
+  <div class="module-head">
+    <span class="module-num">05</span>
+    <h2>Video Editing</h2>
+  </div>
+  <p class="module-desc">My 2-minute camp highlights video — edited in CapCut with transitions, captions, and background music.</p>
+  <div class="panel">
+   <video controls style="width:100%; border-radius:8px;">
+    <source src="capcut video.mp4" type="video/mp4">
+   </video>
+  </div>
+</section>
+
+<!-- MODULE 06: WEB DEV -->
+<section class="module" id="webdev">
+  <div class="module-head">
+    <span class="module-num">06</span>
+    <h2>Web Development & E-Commerce</h2>
+  </div>
+  <p class="module-desc">This entire page is the Module 06 project — hand-coded in HTML, CSS and JavaScript in VS Code. No website builder was used.</p>
+  <div class="panel">
+    <p style="margin:0 0 10px;">Techniques used on this page:</p>
+    <ul style="line-height:1.8; margin:0; color:#33475b;">
+      <li>Semantic HTML structure with a fixed navigation bar</li>
+      <li>CSS Grid & Flexbox for responsive layout</li>
+      <li>JavaScript functions for interactivity (grade calculator, fact generator, troubleshooting cards)</li>
+      <li>Mobile-responsive design (resize your browser to test)</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  IT & AI Summer Camp 2026 · Capstone Project · Built module-by-module, entirely with free tools.
+</footer>
+
+<script>
+// ---- Module 01: AI Facts ----
+const aiFacts = [
+  "In 1950, Alan Turing asked: 'Can machines think?' — this became known as the Turing Test.",
+  "Narrow AI does one task well (like a spam filter). General AI, which thinks like a human, doesn't exist yet.",
+  "A 'prompt' is how we ask AI a question — specific, detailed prompts get much better answers.",
+  "AI can be confidently wrong. Always verify facts AI gives you, especially dates and current events.",
+  "Gemini can search the live web for current info; some AI models cannot access real-time data.",
+  "CapCut's Auto Captions and Background Remover are both examples of AI features used outside a chatbot."
+];
+function showAIFact() {
+  const fact = aiFacts[Math.floor(Math.random() * aiFacts.length)];
+  document.getElementById('ai-terminal').textContent = "> " + fact;
+}
+
+// ---- Module 02: Smart Daily Budget Planner (mirrors Python variables/loops/if-else) ----
+function setupExpenses() {
+  const count = parseInt(document.getElementById('budget-count').value);
+  const container = document.getElementById('expense-inputs');
+  container.innerHTML = '';
+
+  if (isNaN(count) || count < 1) {
+    container.innerHTML = '<p style="color:#8a1c1c;">Please enter a valid number of categories.</p>';
+    return;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const row = document.createElement('div');
+    row.className = 'expense-row';
+    row.innerHTML = `
+      <input type="text" class="exp-name" placeholder="Category ${i + 1} (e.g. Food)">
+      <input type="number" class="exp-amount" placeholder="Amount (Rs.)">
+    `;
+    container.appendChild(row);
+  }
+
+  document.getElementById('calc-budget-btn').style.display = 'block';
+}
+
+function calcBudget() {
+  const income = parseFloat(document.getElementById('budget-income').value);
+  const resultBox = document.getElementById('budget-result');
+
+  if (isNaN(income) || income <= 0) {
+    resultBox.className = 'show';
+    resultBox.style.background = '#fde8e8';
+    resultBox.style.color = '#8a1c1c';
+    resultBox.textContent = "Please enter a valid income/pocket money amount.";
+    return;
+  }
+
+  const names = document.querySelectorAll('.exp-name');
+  const amounts = document.querySelectorAll('.exp-amount');
+
+  let totalSpent = 0;
+  let breakdown = "";
+  for (let i = 0; i < names.length; i++) {
+    const catName = names[i].value.trim() || `Category ${i + 1}`;
+    const catAmount = parseFloat(amounts[i].value) || 0;
+    totalSpent += catAmount;
+    breakdown += `  ${catName}: Rs. ${catAmount}\n`;
+  }
+
+  const remaining = income - totalSpent;
+  const savingsPercent = (remaining / income) * 100;
+
+  let advice;
+  if (remaining < 0) {
+    advice = "You are spending more than you earn — try to cut down on the highest expense category.";
+  } else if (savingsPercent >= 20) {
+    advice = "Great job! You're saving a healthy percentage of your income.";
+  } else if (savingsPercent >= 0) {
+    advice = "You're breaking even, but try to save at least 20% for emergencies.";
+  }
+
+  resultBox.className = 'show';
+  resultBox.style.background = remaining < 0 ? '#fde8e8' : '#e7f6f4';
+  resultBox.style.color = remaining < 0 ? '#8a1c1c' : '#0a6b64';
+  resultBox.textContent =
+    `Income: Rs. ${income}\nExpenses:\n${breakdown}` +
+    `Total Spent: Rs. ${totalSpent}\nRemaining: Rs. ${remaining}\n` +
+    `Savings Rate: ${savingsPercent.toFixed(1)}%\n\nAdvice: ${advice}`;
+}
+
+// ---- Module 04: Troubleshooting cards ----
+const fixes = [
+  { q: "Computer is frozen / not responding", a: "Press Ctrl+Alt+Del → open Task Manager → select the frozen program → End Task." },
+  { q: "No display on the monitor", a: "Check the HDMI/VGA cable connections at the back of the computer." },
+  { q: "No internet connection", a: "Check the WiFi icon in the taskbar, reconnect. If still down, unplug the router for 30 seconds and plug it back in." },
+  { q: "Python error: SyntaxError missing quote", a: "Add the missing ' or \" at the end of the string — e.g. name = 'Ahmed' not name = Ahmed." },
+  { q: "Python error: NameError, variable not defined", a: "Check spelling, and make sure the variable is created before it is used." },
+  { q: "USB device not recognized", a: "Try a different USB port, then restart the computer with the device still plugged in." }
+];
+const fixGrid = document.getElementById('fix-grid');
+fixes.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'fix-card';
+  card.innerHTML = `<div class="q">⚠ ${item.q}</div><div class="a">✔ ${item.a}</div>`;
+  card.addEventListener('click', () => card.classList.toggle('open'));
+  fixGrid.appendChild(card);
+});
+function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  const btn = document.getElementById('theme-toggle');
+  if (document.body.classList.contains('dark-mode')) {
+    btn.textContent = '☀️ Light Mode';
+  } else {
+    btn.textContent = '🌙 Dark Mode';
+  }
+}
+
+// ---- Scroll progress bar (top of page) ----
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('scroll-progress').style.width = percent + '%';
+});
+
+</script>
+</body>
+</html>
